@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: was-nfs
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: "nfs-client"
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: server
+  labels:
+    app: was-server
+spec:
+  type: ClusterIP
+  selector:
+    app: was-server
+  ports:
+  - port: 8080
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: was-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: was-server
+  template:
+    metadata:
+      labels:
+        app: was-server
+    spec:
+      containers:
+      - name: was-server
+        image: nabal1114/onewas:1.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        resources:
+            limits:
+              cpu: 500m
+            requests:
+              cpu: 200m
+        volumeMounts:
+        - name: persistent-storage
+          mountPath: /data
+      volumes:
+      - name: persistent-storage
+        persistentVolumeClaim:
+          claimName: was-nfs
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: was-server-hpa
+  namespace: default
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: was-server
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 70
