@@ -105,6 +105,7 @@ pipeline {
         // 이미지 태그 변경 후 메인 브랜치에 푸시
         sh "git config --global user.email ${gitEmail}"
         sh "git config --global user.name ${gitName}"
+				// deploy/production.yaml 파일 내에서 'tomcat:' 이라는 문자열을 찾아 해당 문자열을 'tomcat:${currentBuild.number}' 로 대체하는 작업 수행 
         sh "sed -i 's/tomcat:.*/tomcat:${currentBuild.number}/g' deploy/production.yaml"
         sh "git add ."
         sh "git commit -m 'fix:${dockerHubRegistry} ${currentBuild.number} image versioning'"
