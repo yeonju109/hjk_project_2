@@ -36,19 +36,19 @@ pipeline {
     }
  
     // Maven 을 사용하여 Jar 파일 생성    
-    stage('Maven Jar Build') {
-      steps {
-        sh 'mvn clean install'  
-      }
-      post {
-        failure {
-          echo 'Maven war build failure' 
-        }
-        success {
-          echo 'Maven war build success'
-        }
-      }
-    }
+    //stage('Maven Jar Build') {
+    //  steps {
+    //    sh 'mvn clean install'  
+    //  }
+    //  post {
+    //    failure {
+    //      echo 'Maven war build failure' 
+    //   }
+    //   success {
+    //     echo 'Maven war build success'
+    //   }
+    //  }
+    //}
     stage('Docker Image Build') {
       steps {
         // 도커 이미지 빌드
