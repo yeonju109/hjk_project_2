@@ -43,7 +43,7 @@ spec:
     spec:
       containers:
       - name: db
-        image: nabal1114/onedb
+        image: yeonju019/onedb
         ports:
         - name: mysql
           containerPort: 3306
