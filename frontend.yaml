@@ -40,7 +40,7 @@ spec:
     spec:
       containers:
         - name: web-server
-          image: nabal1114/oneweb
+          image: yeonju019/oneweb
           imagePullPolicy: Always
           ports:
             - containerPort: 80
