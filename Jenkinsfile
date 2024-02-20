@@ -9,7 +9,7 @@ pipeline {
   // 레포지토리가 없으면 생성됨
   // Credential들에는 젠킨스 크레덴셜에서 설정한 ID를 사용
   environment {
-    dockerHubRegistry = 'yeonju019/tomcat' 
+    dockerHubRegistry = 'yeonju019/onewas' 
     dockerHubRegistryCredential = 'docker' 
     githubCredential = 'github'
     gitEmail = 'yeonju7548@naver.com'
@@ -105,8 +105,8 @@ pipeline {
         // 이미지 태그 변경 후 메인 브랜치에 푸시
         sh "git config --global user.email ${gitEmail}"
         sh "git config --global user.name ${gitName}"
-	// deploy/production.yaml 파일 내에서 'tomcat:' 이라는 문자열을 찾아 해당 문자열을 'tomcat:${currentBuild.number}' 로 대체하는 작업 수행 
-        sh "sed -i 's/tomcat:.*/tomcat:${currentBuild.number}/g' backend.yaml"
+	// backend.yaml 파일 내에서 'onewas:' 이라는 문자열을 찾아 해당 문자열을 'onewas:${currentBuild.number}' 로 대체하는 작업 수행 
+        sh "sed -i 's/onewas:.*/onewas:${currentBuild.number}/g' backend.yaml"
         sh "git add ."
         sh "git commit -m 'fix:${dockerHubRegistry} ${currentBuild.number} image versioning'"
         sh "git branch -M main"
