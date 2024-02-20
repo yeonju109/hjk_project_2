@@ -40,7 +40,7 @@ spec:
     spec:
       containers:
       - name: was-server
-        image: nabal1114/onewas:1.0
+        image: yeonju019/onewas:1.0
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
