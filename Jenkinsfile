@@ -29,9 +29,10 @@ pipeline {
             post {
                 failure {
                 echo 'Repository clone failure' 
-            }
-            success {
+                }
+                success {
                 echo 'Repository clone success' 
+                }
             }
         }
         stage('Docker Build'){
