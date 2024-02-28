@@ -36,26 +36,36 @@ pipeline {
             }
         }
         stage('Docker Build'){
-            docker.withRegistry("https://${ECR_PATH}", "ecr:${REGION}:${AWS_CREDENTIAL_ID}"){
-            nginx_image = docker.build("${ECR_PATH}/${NGINX_ECR_IMAGE}")
-            tomcat_image = docker.build("${ECR_PATH}/${TOMCAT_ECR_IMAGE}")
+            steps {
+                script{
+                    docker.withRegistry("https://${ECR_PATH}", "ecr:${REGION}:${AWS_CREDENTIAL_ID}"){
+                    nginx_image = docker.build("${ECR_PATH}/${NGINX_ECR_IMAGE}")
+                    tomcat_image = docker.build("${ECR_PATH}/${TOMCAT_ECR_IMAGE}")
+                    }
+                }
             }
         }
         stage('Push to ECR'){
-            docker.withRegistry("https://${ECR_PATH}", "ecr:${REGION}:${AWS_CREDENTIAL_ID}"){
-            nginx_image.push("v${env.BUILD_NUMBER}")
-            docker.withRegistry("https://${ECR_PATH}", "ecr:${REGION}:${AWS_CREDENTIAL_ID}"){
-            tomcat_image.push("v${env.BUILD_NUMBER}")
-            }
+            steps {     
+                script{                       
+                    docker.withRegistry("https://${ECR_PATH}", "ecr:${REGION}:${AWS_CREDENTIAL_ID}"){
+                    nginx_image.push("v${env.BUILD_NUMBER}")
+                    docker.withRegistry("https://${ECR_PATH}", "ecr:${REGION}:${AWS_CREDENTIAL_ID}"){
+                    tomcat_image.push("v${env.BUILD_NUMBER}")
+                    }
+                    }
+                }
             }
         }
         stage('CleanUp Images'){
-            sh"""
-            docker rmi ${ECR_PATH}/${NGINX_ECR_IMAGE}:v$BUILD_NUMBER
-            docker rmi ${ECR_PATH}/${NGINX_ECR_IMAGE}:latest
-            docker rmi ${ECR_PATH}/${TOMCAT_ECR_IMAGE}:v$BUILD_NUMBER
-            docker rmi ${ECR_PATH}/${TOMCAT_ECR_IMAGE}:latest
-            """
+            steps{
+                sh"""
+                docker rmi ${ECR_PATH}/${NGINX_ECR_IMAGE}:v$BUILD_NUMBER
+                docker rmi ${ECR_PATH}/${NGINX_ECR_IMAGE}:latest
+                docker rmi ${ECR_PATH}/${TOMCAT_ECR_IMAGE}:v$BUILD_NUMBER
+                docker rmi ${ECR_PATH}/${TOMCAT_ECR_IMAGE}:latest
+                """
+            }
         }
         stage('K8S Manifest Update') {
             steps {
