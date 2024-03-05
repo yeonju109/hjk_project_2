@@ -35,9 +35,10 @@ pipeline {
                 }
             }
         }
-        stage('Docker Build'){
+        stage('Build image'){
             steps {
                 script{
+                    echo "Jenkins Workspace: ${env.WORKSPACE}"
                     docker.withRegistry("https://${ECR_PATH}", "ecr:${REGION}:${AWS_CREDENTIAL_ID}"){
                     nginx_image = docker.build("${ECR_PATH}/${NGINX_ECR_IMAGE}")
                     tomcat_image = docker.build("${ECR_PATH}/${TOMCAT_ECR_IMAGE}")
