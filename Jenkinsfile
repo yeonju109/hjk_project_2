@@ -54,6 +54,7 @@ pipeline {
                     // docker.withRegistry("https://${ECR_PATH}", "ecr:${REGION}:${AWS_CREDENTIAL_ID}"){
                     // tomcat_image.push("v${env.BUILD_NUMBER}")
                     // }
+                    }
                 }
             }
         }
