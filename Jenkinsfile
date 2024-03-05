@@ -41,7 +41,7 @@ pipeline {
                     echo "Jenkins Workspace: ${env.WORKSPACE}"
                     docker.withRegistry("https://${ECR_PATH}", "ecr:${REGION}:${AWS_CREDENTIAL_ID}"){
                     nginx_image = docker.build("${ECR_PATH}/${NGINX_ECR_IMAGE}")
-                    tomcat_image = docker.build("${ECR_PATH}/${TOMCAT_ECR_IMAGE}")
+                    // tomcat_image = docker.build("${ECR_PATH}/${TOMCAT_ECR_IMAGE}")
                     }
                 }
             }
@@ -51,13 +51,13 @@ pipeline {
                 script{                       
                     docker.withRegistry("https://${ECR_PATH}", "ecr:${REGION}:${AWS_CREDENTIAL_ID}"){
                     nginx_image.push("v${env.BUILD_NUMBER}")
-                    docker.withRegistry("https://${ECR_PATH}", "ecr:${REGION}:${AWS_CREDENTIAL_ID}"){
-                    tomcat_image.push("v${env.BUILD_NUMBER}")
-                    }
-                    }
+                    // docker.withRegistry("https://${ECR_PATH}", "ecr:${REGION}:${AWS_CREDENTIAL_ID}"){
+                    // tomcat_image.push("v${env.BUILD_NUMBER}")
+                    // }
                 }
             }
         }
+        
         stage('CleanUp Images'){
             steps{
                 sh"""
@@ -81,7 +81,7 @@ pipeline {
                 // nginx-deploy.yaml 파일 내에서 'nginx:' 이라는 문자열을 찾아 해당 문자열을 'nginx:${currentBuild.number}' 로 대체하는 작업 수행 
                 sh "sed -i 's/nginx:.*/nginx:v${env.BUILD_NUMBER}/g' nginx-deploy.yaml"
                 // tomcat-deploy.yaml 파일 내에서 'tomcat:' 이라는 문자열을 찾아 해당 문자열을 'tomcat:${currentBuild.number}' 로 대체하는 작업 수행 
-                sh "sed -i 's/tomcat:.*/tomcat:v${env.BUILD_NUMBER}/g' tomcat-deploy.yaml"
+                // sh "sed -i 's/tomcat:.*/tomcat:v${env.BUILD_NUMBER}/g' tomcat-deploy.yaml"
                 sh "git add ."
                 sh "git commit -m 'fix:${ECR_PATH}/${NGINX_ECR_IMAGE} v${env.BUILD_NUMBER} image versioning'"
                 sh "git branch -M main"
