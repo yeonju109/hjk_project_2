@@ -7,9 +7,9 @@ pipeline {
 
     environment{
         REGION = 'ap-northeast-2'
-        EKS_API = 'https://46D0218924E3C1CCFC1B350DF1FC4CDF.sk1.ap-northeast-2.eks.amazonaws.com'
+        EKS_API = 'https://E754151AE3AFC1D81379C15E57E6395C.gr7.ap-northeast-2.eks.amazonaws.com'
         EKS_CLUSTER_NAME = 'eks-cluster'
-        //EKS_JENKINS_CREDENTIAL_ID = 'kubectl-deploy-credentials'
+        EKS_JENKINS_CREDENTIAL_ID = 'kubectl-deploy-credentials'
         ECR_PATH = '992382680302.dkr.ecr.ap-northeast-2.amazonaws.com'
         NGINX_ECR_IMAGE = 'nginx'
         TOMCAT_ECR_IMAGE = 'tomcat'
