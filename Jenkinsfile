@@ -70,8 +70,8 @@ pipeline {
         stage('K8S Manifest Update') {
             steps {
                 // git 계정 로그인, 해당 레포지토리의 main 브랜치에서 클론
-                git credentialsId: 'github',
-                    url: 'https://github.com/yeonju109/hjk_project_2.git',
+                git credentialsId: 'github-ssh',
+                    url: 'git@github.com:yeonju109/hjk_project_2.git',
                     branch: 'main'  
         
                 // 이미지 태그 변경 후 메인 브랜치에 푸시
