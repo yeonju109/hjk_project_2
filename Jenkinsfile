@@ -14,7 +14,7 @@ pipeline {
         NGINX_ECR_IMAGE = 'nginx'
         TOMCAT_ECR_IMAGE = 'tomcat'
         AWS_CREDENTIAL_ID = 'aws-credential'
-        githubCredential = 'github'
+        githubCredential = 'github-ssh'
         gitEmail = 'yeonju7548@naver.com'
         gitName = 'yeonju109'
     }
@@ -70,7 +70,7 @@ pipeline {
         stage('K8S Manifest Update') {
             steps {
                 // git 계정 로그인, 해당 레포지토리의 main 브랜치에서 클론
-                git credentialsId: 'github',
+                git credentialsId: 'github-ssh',
                     url: 'https://github.com/yeonju109/hjk_project_2.git',
                     branch: 'main'  
         
