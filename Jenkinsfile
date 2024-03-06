@@ -14,7 +14,7 @@ pipeline {
         NGINX_ECR_IMAGE = 'nginx'
         TOMCAT_ECR_IMAGE = 'tomcat'
         AWS_CREDENTIAL_ID = 'aws-credential'
-        githubCredential = 'github-ssh'
+        githubCredential = 'github'
         gitEmail = 'yeonju7548@naver.com'
         gitName = 'yeonju109'
     }
