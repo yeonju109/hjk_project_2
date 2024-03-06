@@ -70,7 +70,7 @@ pipeline {
         stage('K8S Manifest Update') {
             steps {
                 // git 계정 로그인, 해당 레포지토리의 main 브랜치에서 클론
-                git credentialsId: ${githubCredential},
+                git credentialsId: 'github',
                     url: 'https://github.com/yeonju109/hjk_project_2.git',
                     branch: 'main'  
         
