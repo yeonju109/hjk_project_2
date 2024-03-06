@@ -64,8 +64,8 @@ pipeline {
                 sh"""
                 docker rmi ${ECR_PATH}/${NGINX_ECR_IMAGE}:v$BUILD_NUMBER
                 docker rmi ${ECR_PATH}/${NGINX_ECR_IMAGE}:latest
-                docker rmi ${ECR_PATH}/${TOMCAT_ECR_IMAGE}:v$BUILD_NUMBER
-                docker rmi ${ECR_PATH}/${TOMCAT_ECR_IMAGE}:latest
+                // docker rmi ${ECR_PATH}/${TOMCAT_ECR_IMAGE}:v$BUILD_NUMBER
+                // docker rmi ${ECR_PATH}/${TOMCAT_ECR_IMAGE}:latest
                 """
             }
         }
